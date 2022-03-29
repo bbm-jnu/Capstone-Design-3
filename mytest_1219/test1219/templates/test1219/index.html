@@ -1,0 +1,9 @@
+<h1>전찬혁 2018103297 웹프로그래밍 기말고사</h1>
+<h2>공공와이파이 보기</h2>
+{{error_message}}
+<h3>어떤 공공와이파이를 보고 싶으신가요?</h3>
+<form action="{% url 'test1219:maps'%}" method=POST>{% csrf_token %}
+    <input type=text placeholder="동네 이름을 입력해주세요" name="jejuelec">
+    <br>
+    <button type=submit >지도에서 보기</button>
+</form>
