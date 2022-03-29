@@ -1,0 +1,311 @@
+C:\Users\Reuben\2022_1\0316test\mytest_1219\mytest_1219>cd C:\Users\Reuben\2022_1\0316test\mytest_1219
+
+C:\Users\Reuben\2022_1\0316test\mytest_1219>python manage.py runserver
+
+---------------서버작동
+cd test1219
+python manage.py runserver 127.0.0.1:8888
+
+------------가상환경 진입
+cd..
+lib에서 
+Scripts\activate.bat
+를 통해 가상환경 진입
+
+
+--------------project 생성
+django-admin startproject (mysite, 원하는 이름)
+사이트 폴더 생성
+
+cd (mysite, 원하는 이름)
+
+
+---------------앱 생성
+python manage.py startapp (polls, 앱이름)
+앱 생성 완료
+
+
+--------------project의 setting 수정, 앱 생성 통보
+(mysite, 원하는 이름)의 settings.py에서
+ALLOWED_HOSTS = ['localhost','127.0.0.1']
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    '(polls, 앱이름).apps.(Polls, 대문자 앱이름)Config'
+]
+
+TIME_ZONE = 'Asia/Seoul'
+어플 생성을 알림
+
+-------------------project DB 생성
+python manage.py migrate
+(mysite, 원하는 이름)에 db 생성
+
+
+-------------------project admin 생성
+python manage.py createsuperuser
+슈퍼유저 만들고
+아이디, 비밀번호, 이메일 입력
+
+http://127.0.0.1:8888/admin
+에 접속가능해짐
+
+----------------------앱 model 설정
+from django.db import models
+
+class List(models.Model):
+    name_text = models.CharField(max_length=200)
+    latitude = models.FloatField(default=0.0)
+    longitude = models.FloatField(default=0.0)
+
+    def __str__(self):
+        return self.name_text
+
+
+--------------------------앱 admin 생성
+from django.contrib import admin
+from test1219.models import List
+
+admin.site.register(List)
+
+
+-----------------------------앱 DB 생성
+django_test) C:\Users\jhahn\Google 드라이브\0python\django_test\mysite>python manage.py makemigrations
+(django_test) C:\Users\jhahn\Google 드라이브\0python\django_test\mysite>python manage.py migrate
+
+
+
+-----------------------------앱 urls.py 생성 후 입력
+from django.contrib import admin
+from django.urls import path
+from . import views
+
+app_name = 'test1219'
+urlpatterns = [
+    path('', views.index, name='index'),  # /polls/
+    path('maps/', views.maps, name='maps')
+]
+
+-------------------------앱 html 설정
+(polls, 앱이름)에 templates 폴더 생성
+(polls, 앱이름)templates 에 (polls, 앱이름) 폴더 생성
+
+
+--------------------------------------------앱 templates 안의 앱 이름 폴더에 index.html생성
+<h1>전찬혁 2018103297 웹프로그래밍 기말고사</h1>
+<h2>전기차 충전소</h2>
+{{error_message}}
+<h3>어떤 전기차 충전소가 보고 싶으신가요?</h3>
+<form action="{% url 'test1219:maps'%}" method=POST>{% csrf_token %}
+    <input type=text placeholder="충전소 이름을 입력하세요" name="jejuelec">
+    <br>
+    <button type=submit >지도에서 보기</button>
+</form>
+
+--------------------------------------------앱 templates 안의 앱 이름 폴더에 maps.html생성
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>지도 생성하기</title>
+    <style>
+.label {margin-bottom: 96px;}
+.label * {display: inline-block;vertical-align: top;}
+.label .left {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_l.png") no-repeat;display: inline-block;height: 24px;overflow: hidden;vertical-align: top;width: 7px;}
+.label .center {background: url(https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_bg.png) repeat-x;display: inline-block;height: 24px;font-size: 12px;line-height: 24px;}
+.label .right {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_r.png") -1px 0  no-repeat;display: inline-block;height: 24px;overflow: hidden;width: 6px;}
+</style>
+
+
+</head>
+<body>
+<!-- 지도를 표시할 div 입니다 -->
+<div id="map" style="width:100%;height:400px;"></div>
+<p><em>전기차 충전소 위치 입니다. 클릭하시면 위도, 경도를 알려드려요</em></p>
+<p id="result"></p>
+
+
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d9349d629a50a621fea0d42c6faaa2ce"></script>
+<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+    mapOption = {
+        center: new kakao.maps.LatLng({{latitude}}, {{longitude}}), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
+
+// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+var map = new kakao.maps.Map(mapContainer, mapOption);
+
+// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+var mapTypeControl = new kakao.maps.MapTypeControl();
+
+// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+var zoomControl = new kakao.maps.ZoomControl();
+map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+// 지도에 클릭 이벤트를 등록합니다
+// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+
+    // 클릭한 위도, 경도 정보를 가져옵니다
+    var latlng = mouseEvent.latLng;
+
+    var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
+    message += '경도는 ' + latlng.getLng() + ' 입니다';
+
+    var resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = message;
+
+});
+
+var positions = [
+    {
+        title: '{{name}}',
+        latlng: new kakao.maps.LatLng({{latitude}}, {{longitude}})
+    }
+];
+
+// 마커 이미지의 이미지 주소입니다
+
+
+var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png";
+
+for (var i = 0; i < positions.length; i ++) {
+
+    // 마커 이미지의 이미지 크기 입니다
+    var imageSize = new kakao.maps.Size(24, 35);
+
+    // 마커 이미지를 생성합니다
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        map: map, // 마커를 표시할 지도
+        position: positions[i].latlng, // 마커를 표시할 위치
+        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+        image : markerImage // 마커 이미지
+    });
+}
+
+// 커스텀 오버레이에 표시할 내용입니다
+// HTML 문자열 또는 Dom Element 입니다
+var content = '<div class ="label"><span class="left"></span><span class="center">전기차충전소!</span><span class="right"></span></div>';
+
+// 커스텀 오버레이가 표시될 위치입니다
+var position = new kakao.maps.LatLng({{latitude}} , {{longitude}});
+
+// 커스텀 오버레이를 생성합니다
+var customOverlay = new kakao.maps.CustomOverlay({
+    position: position,
+    content: content
+});
+
+// 커스텀 오버레이를 지도에 표시합니다
+customOverlay.setMap(map);
+
+
+
+</script>
+<a href="{% url 'test1219:index' %}">home</a>
+<p>시험 값</p>
+{{longitude}}
+{{latitude}}
+{{name}}
+</body>
+</html>
+
+
+-----------------------------------앱 views.py 설정
+from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from urllib.parse import urlencode
+from urllib.request import urlopen
+import json
+import csv
+import math
+
+from test1219.models import List
+from django.views.decorators.csrf import csrf_exempt
+
+#@csrf_exempt
+def index(request):
+    return render(request, 'test1219/index.html', None)
+
+#@csrf_exempt
+def maps(request):
+    jejuelec = request.POST.get('jejuelec')
+    if(jejuelec==""):
+        return render(request, 'test1219/index.html', {
+            'error_message': "입력하지 않으셨습니다. 다시 입력 부탁드립니다.",
+                })
+    
+    else:
+        print(jejuelec)
+        url = 'https://gw.jejudatahub.net/api/proxy/27a7c7c6dbb511e79252394919cf6a6f/'
+
+
+        input_json = {'name': jejuelec}  # 'name': '노형동주민센터'}#원하는 데이터 조건 설정, 필수 ㅔ데이터는 꼭 넣어야 한다, 받는 걸 선택할 땐, json
+        # ,
+        # 'latitude': '33.483098',
+        # 'longitude': '126.477231'}
+        queryParams = '?' + urlencode(input_json)  # 키랑 url을 연결시키는 부분
+
+        input_url = url + 'd498b751b52e45a098b751b52e75a06a' + queryParams  # api에 넣을 url 완성
+        print(input_url)
+
+        response_body = urlopen(input_url).read().decode('utf-8')  # 받은 응답 변수에 넣기
+        print(response_body)
+
+        json_data = json.loads(response_body)  # 응답 json으로 만들기
+
+        if(json_data['totCnt']==0):
+            return render(request, 'test1219/index.html', {
+                'error_message': "없는 충전소 입니다. 다시 입력 부탁드립니다.",
+            })
+        items = json_data['data']  # 데이터에서 Data 안에 들어 있는 것 보기
+
+        for data in items:  # data에 있는걸 itmes 만큼 출력해라
+            onerow = []
+            onerow.append(data['name'])
+            onerow.append(data['longitude'])
+            onerow.append(data['latitude'])
+
+        name = onerow[0]
+        longitude = onerow[1]
+        latitude = onerow[2]
+
+        return render(request, 'test1219/maps.html', {'name': name, 'longitude': longitude, 'latitude': latitude})
+
+-------------------------------------------------------------------------
+
+
+---------------서버작동
+cd mytest_1219
+python manage.py runserver 127.0.0.1:8888
+
+------------가상환경 진입
+cd..
+lib에서 
+Scripts\activate.bat
+를 통해 가상환경 진입
+
+
+
+
+
+
+
+
+
+
+
