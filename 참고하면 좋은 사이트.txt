@@ -1,0 +1,7 @@
+https://data101.oopy.io/recommendation-engine-cosine-similarity
+
+웹 사이트에서 음식점 데이터와 별점을 크롤링하고, 학습을 통해서 자신만의 추천 맛집을 주는 프로그래밍 코딩을 한 블로그입니다.
+
+Selenium이라는 패킷을 이용해서 코딩한다.
+
+--------------------------

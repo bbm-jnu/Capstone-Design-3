@@ -1,3 +1,30 @@
+서버 실행은 manage.py가 있는 곳에서 진행하면 됩니다.
+// 서버 구동
+>>> python manage.py runserver
+
+// 나가기
+>>> Ctrl + C
+
+-------------------------------------------------------------------
+가상환경은 여러가지 개발을 진행 할때 사용하는 방법입니다.
+// 가상 환경 설치(생성)
+>>> python -m venv 가상환경명
+
+// 가상 환경 위치 진입
+>>> cd 가상환경위치\가상환경명\scripts
+
+// 가상 환경 실행(활성화)
+>>> activate
+// 실행이 완료되면 터미널 앞에 (가상환경명) 출력됨
+
+// 가상 환경 종료(비활성화)
+>>> deactivate
+
+https://angelplayer.tistory.com/172
+
+가상환경이 아닌 컴퓨터에 장고를 install 했을 경우 특별하게 가상환경은 사용하지 않아도 괜찮습니다.
+-------------------------------------
+
 C:\Users\Reuben\2022_1\0316test\mytest_1219\mytest_1219>cd C:\Users\Reuben\2022_1\0316test\mytest_1219
 
 C:\Users\Reuben\2022_1\0316test\mytest_1219>python manage.py runserver
