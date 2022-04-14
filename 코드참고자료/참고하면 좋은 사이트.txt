@@ -4,6 +4,13 @@ https://data101.oopy.io/recommendation-engine-cosine-similarity
 
 Selenium이라는 패킷을 이용해서 코딩한다.
 
+https://data101.oopy.io/recommendation-engine-cosine-similarity
+(전체 코딩 가이드, 검색 알고리즘 구성, 네이버 지도에서 적용 등이 상세하게 다른 페이지로 구성되어 있음)
+
+
+https://www.data.go.kr/data/15083033/fileData.do
+(소상공인시장진흥공단_상가(상권)정보 모음)
+
 --------------------------
 
 https://sites.google.com/chromium.org/driver/
@@ -21,3 +28,30 @@ https://velog.io/@chacha/Selenium-%EC%9E%90%EC%A3%BC-%EA%B2%AA%EB%8A%94-%EC%9D%B
 https://greeksharifa.github.io/references/2020/10/30/python-selenium-usage/
 
 참고하고 있는 사이트인데, 아직 자세한 파악이 안됐습니다.
+
+
+----------------------------
+파이썬 크롤링 csv 파일저장 방법
+https://kimflstudio.tistory.com/entry/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%ED%81%AC%EB%A1%A4%EB%A7%81-csv-%ED%8C%8C%EC%9D%BC%EC%A0%80%EC%9E%A5-%EB%B0%A9%EB%B2%95-%EB%84%A4%EC%9D%B4%EB%B2%84-%EB%AA%A8%EB%B0%94%EC%9D%BC-%EA%B2%80%EC%83%89%EA%B2%B0%EA%B3%BC-%EC%9B%B9%EC%8A%A4%ED%81%AC%EB%9E%98%ED%95%91
+
+
+----------------------------------------------
+차근차근 코드 설명을 한 블로그 
+
+https://blog.naver.com/shccsh01/222609432146
+
+
+
+--------------------------------------
+셀레륨 옵션 성명
+
+https://blog.naver.com/dw2613/222663229213
+
+------
+
+https://ddolcat.tistory.com/675
+네이버, 인스타, 페북, 다음 로그인 후 크롤링 코드 모음
+
+---------
+https://heodolf.tistory.com/80
+CSS 크롤링 태그 알아보는 자세한 방법
