@@ -1,1 +1,57 @@
+import numpy as np
 
+def distance_list(p1, p2_list): #거리
+    return [np.sqrt(np.sum(np.power(p2 -p1, 2))) for p2 in p2_list ]
+
+def check_nn(p1, p2_list, r): #주변포인트
+    nn = []
+    nn_bi = []
+    for p2 in p2_list:
+        if p2[0] >= p1[0]-r and p2[0] <= p1[0] + r and p2[1] >= p1[1]-r and p2[1] <= p1[1] + r:
+            if np.sqrt(np.sum(np.power(p2 - p1,2))) <= r:
+                nn.append(p2)
+                nn_bi.append(1)
+            else:
+                nn_bi.append(0)
+        else:
+          nn_bi.append(0)
+    return np.array(nn) , np.array(nn_bi)
+    
+def knn(p1, p2_list, p2_label, k):
+    if k % 2 == 0 or k ==0:
+        return print("k can't be even number")
+    r = 1
+    nn = check_nn(p1,p2_list,r)[0]
+    if len(p2_list) <= k:
+        return print("Less than k")
+    elif len(nn) < k and len(p2_list) > k:
+        while len(nn) < k:
+            r += 1
+            nn = check_nn(p1,p2_list,r)[0]
+        print(len(nn))
+        if len(nn) > k:
+            nn_sort = np.sort(distance_list(p1, nn))
+            r = nn_sort[k - 1]
+    nn_sort = np.sort(distance_list(p1, nn))
+    r = nn_sort[k - 1]
+    nn, nn_bi = check_nn(p1, p2_list,r)
+    nn_label = p2_label[np.where(nn_bi==1)]
+    #(1)
+    unique, counts = np.unique(nn_label, return_counts=True)
+    nn_label_dict = dict(zip(unique, counts))
+    p1_label = max(nn_label_dict.keys(),key=lambda x : nn_label_dict[x])
+    return nn, r, p1_label
+    
+#데이터셋
+x = np.array([1,1])
+y = np.array([[2,2],[3,3],[1,1],[3,5],[5,1],[10,5],[-2,-2]])
+y_label = np.array([1,1,2,1,2,2,2])
+
+#실습1
+knn(x,y,y_label, 4)
+
+#실습2
+knn(x,y,y_label, 3)
+
+#실습3
+check_nn(x,y,4.24)
