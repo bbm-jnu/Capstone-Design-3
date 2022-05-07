@@ -1,0 +1,59 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn import datasets
+
+wine=datasets.load_wine()
+df=pd.DataFrame(wine.data,columns=wine.feature_names)
+df['wine type']=wine.target
+df.head() # class 0, class 1, class 2
+
+df['wine type'].unique()
+
+len(df['wine type'].unique())
+
+from sklearn.preprocessing import StandardScaler
+SS=StandardScaler()
+wine_scaled=SS.fit_transform(wine.data)
+
+input=wine_scaled
+output=df['wine type']
+
+from sklearn.model_selection import train_test_split
+train_input,test_input,train_output,test_output=train_test_split(input,output)
+
+from sklearn.neighbors import KNeighborsClassifier
+knn=KNeighborsClassifier(n_neighbors=3) 
+
+knn.fit(train_input, train_output)
+
+knn.score(test_input,test_output)
+
+knn=KNeighborsClassifier(n_neighbors=3)
+knn2= KNeighborsClassifier(n_neighbors=2)
+knn3= KNeighborsClassifier(n_neighbors=5)
+
+knn.fit(train_input,train_output)
+knn2.fit(train_input,train_output)
+knn3.fit(train_input,train_output)
+
+knn.score(test_input,test_output), knn.score(train_input,train_output) #K=3
+
+knn2.score(test_input,test_output), knn2.score(train_input,train_output) #K=2
+
+knn3.score(test_input,test_output), knn3.score(train_input,train_output) #K=5
+
+# best K value
+acc_test=[]
+acc_train=[]
+for i in range(1, 100):
+  knn_k=KNeighborsClassifier(n_neighbors=i)
+  knn_k.fit(train_input,train_output)
+  acc_test.append(knn_k.score(test_input,test_output))
+  acc_train.append(knn_k.score(train_input,train_output))
+  
+plt.plot(range(1,100),acc_test,'r')
+plt.plot(range(1,100),acc_train,'g')
+
+plt.plot(range(1,10),acc_test[0:9],'r')
+plt.plot(range(1,10),acc_train[0:9],'g')
