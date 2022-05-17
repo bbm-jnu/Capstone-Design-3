@@ -15,7 +15,7 @@ data
 moviedata=data.pivot_table(index="movieId",  columns='userId')['rating']
 moviedata
 
-#NaN값을 -1로 변경 ( 평점을 계산할 때 양수값만 처리하면 됌)
+#NaN값을 -1로 변경 ( 평점을 계산할 때 양수값만 처리하면 됨)
 moviedata.fillna(-1, inplace=True)
 moviedata
 
