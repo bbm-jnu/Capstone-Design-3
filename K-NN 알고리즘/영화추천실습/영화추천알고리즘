@@ -70,3 +70,10 @@ movieList = []
 for rate, m_id in recommendation(moviedata, 25):
     movieList.append((rate, movies.loc[movies['movieId'] == m_id, 'title']. values[0]))
 movieList[:10]
+#결과
+[(4.5, "Dracula (Bram Stoker's Dracula) (1992)"),
+ (3.5, 'Return with Honor (1998)'),
+ (3.0, 'Great Muppet Caper, The (1981)'),
+ (2.5, 'Bully (2001)'),
+ (1.0, "Christmas Vacation (National Lampoon's Christmas Vacation) (1989)"),
+ (0.5, 'Here on Earth (2000)')]
