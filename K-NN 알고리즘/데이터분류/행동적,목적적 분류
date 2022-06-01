@@ -1,0 +1,16 @@
+from google.colab import drive 
+drive.mount('/content/gdrive')
+
+import pandas as pd 
+import numpy as np
+
+# 데이터 읽어오기 (파일만 수정)
+movies=pd.read_csv('/content/gdrive/My Drive/movies.csv')
+
+#csv파일에서 사진과 블로그리뷰 비율을 측정하고 사진비율이 0.7이상이나 블로그비율이 0.7 이상인 카페들만 추출
+df[(df['count']>=0.7)]
+
+
+
+#참고 사이트
+https://computer-science-student.tistory.com/375
